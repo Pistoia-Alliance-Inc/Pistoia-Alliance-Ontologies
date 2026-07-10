@@ -8,6 +8,134 @@ Public access repository to Pistoia Alliance Ontologies
 ## Release notes
 
 <details>
+<summary>IDMP Ontology Release 1.7.0 (master_v1.7.0) - 2026-07-10</summary>
+
+# IDMP Ontology Release 1.7.0
+
+The 1.7.0 release of IDMP-O (Identification of Medicinal Products Ontology) includes development efforts accomplished in the second quarter of 2026. 
+
+The main focus of the release is new ontology content around packaging. 
+Pack size is represented with structured values, following the EMA/ISO guidance that the pack size is the total number of units contained in the manufactured item or package item, expressed per unit of presentation. 
+Composite packs are expressed as one pack-size term per component, and combination products such as powder-and-solvent packs requiring reconstitution are detected through the combined pharmaceutical dose form. 
+A SHACL rule derives pack sizes from per-constituent quantities, and competency questions verify that asserted pack sizes match the aggregation. 
+We have added new units of presentation (vial, capsule, syringe) to the UCUM vocabulary with mappings to the EMA SPOR RMS Units of Presentation, as well as new convenience properties.
+
+In addition, the ontology sources were migrated from RDF/XML to Turtle. The migration from RDF/XML to TTL was done while keeping all triples i.e., the converted ontologies contain the identical RDF content as before.
+
+### Content modifications
+
+- Added the class idmp-mprd:PackSize to the medicinal-products module (from ISO 11615). It is a subclass of cmns-qtu:ScalarQuantityValue. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+- Added the object property idmp-mprd:hasPackSize to the medicinal-products module (from ISO 11615), relating idmp-mprd:PackagedMedicinalProduct to its pack sizes. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+- Added the generic object property idmp-mprd:hasDerivedValue to the medicinal-products module (from ISO 11615) for quantity values computed by a system rather than asserted, used for pack sizes derived from constituent quantities. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+- Added the individuals idmp-ucum:Vial, idmp-ucum:Capsule, and idmp-ucum:Syringe as units of presentation to the UCUM vocabulary. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+- Added the object properties idmp-uom:isDenominatorOf and idmp-uom:isNumeratorOf to the units-of-measurement module (from ISO 11240). [[Issue IDMPO-4]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-4)
+- Added five examples EXMP/PackSizeExample-* demonstrating the pack-size pattern. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+
+### Validation and test additions
+
+- Added a SHACL shape validating every asserted pack size (exactly one decimal value, at most one unit of presentation) and SHACL-AF rules deriving pack sizes from per-constituent quantities. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+- Added competency questions asking for the pack size of a packaged medicinal product and checking that asserted pack sizes match the aggregation from constituents. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+
+### Fixes
+
+- Changed the namespace bound to the prefix cmns-bfo in the MVF-to-BFO mapping to the canonical IRI of the MAP/MappingCommonsToBFO ontology. [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1)
+- Added the missing rdfs:label to the property recipePrecedes. [[Issue IDMPO-12]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-12)
+
+### New release artifact
+
+- The release bundle contains the merged single-file release artifact composite/IdentificationOfMedicinalProductsOntology.ttl. It combines all released modules (with maturity level Release from ISO, META, and VOCAB) under one ontology header, keeps the external foundational ontologies as owl:imports, and includes the Commons ProductsAndServices. It reproduces the structure of the composites of releases 1.2.0 to 1.6.0. [[Issue IDMPO-7]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-7)
+
+### Technical modifications
+
+- Migrated every ontology, vocabulary, and example source file from RDF/XML to Turtle and updated the catalogs accordingly. The RDF content is unchanged, the conversion keeps all triples. [[Issue IDMPO-10]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-10)
+- The release bundle includes quality reports (hygiene, SHACL, consistency) under hygiene/. [[Issue IDMPO-7]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-7)
+- The engineering infrastructure of the repository was changed. The previous build workflow under etc/ was replaced by a self-contained build pipeline (build/idmp_build) stored next to the ontology artifacts and executed in GitHub. [[Issue IDMPO-10]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-10)
+
+**No ontologies were removed. All terms published in release 1.6.0 remain present.**
+
+### Delivered Change Requests (JIRA Tickets)
+
+Complete list of the tickets delivered in this release
+
+- [[Issue IDMPO-1]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-1) Add structured pack size (model, units of presentation with SPOR mappings, examples, SHACL derivation, and competency questions) by @hk-accurids
+- [[Issue IDMPO-3]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-3) Create initial set of IDMP-O tests to be run before the next release by @hk-accurids 
+- [[Issue IDMPO-4]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-4) Add inverse properties isDenominatorOf and isNumeratorOf by @hk-accurids 
+- [[Issue IDMPO-5]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-5) Add direct properties between pharmaceutical product and manufactured item by @hk-accurids. Delivered and subsequently REVERTED after review feedback, not part of release 1.7.0.
+- [[Issue IDMPO-7]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-7) Generate the merged publication artifact IdentificationOfMedicinalProductsOntology.ttl as part of the release bundle by @hk-accurids 
+- [[Issue IDMPO-10]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-10) Migrate the repository to Turtle and introduce the release pipeline with reporting by @hk-accurids 
+- [[Issue IDMPO-11]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-11) Separate IDMP Ontology Core from Supplementary Modules by @hk-accurids 
+- [[Issue IDMPO-12]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-12) Add label to cmc:recipePrecedes by @hk-accurids
+
+### List of changed terms
+
+| Status | Label | Triples added | Triples deleted | Term IRI |
+| --- | --- | --- | --- | :--- |
+| added | IDMP-O Example, pack size, aggregated | 12 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/ |
+| added | pack size aggregated, container constituent, 4 tablets | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/ContainerConstituent-4Tablets |
+| added | pack size aggregated, container constituent, 6 tablets | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/ContainerConstituent-6Tablets |
+| added | pack size aggregated, manufactured item, tablets batch a | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/ManufacturedItem-TabletsBatchA |
+| added | pack size aggregated, manufactured item, tablets batch b | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/ManufacturedItem-TabletsBatchB |
+| added | pack size aggregated, medicinal product, tablets | 3 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/MedicinalProduct-Tablets |
+| added | pack size aggregated, package item, 10 tablets | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/PackageItem-10Tablets |
+| added | pack size aggregated, packaged medicinal product, 10 tablets | 9 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregated/PackagedMedicinalProduct-10Tablets |
+| added | IDMP-O Example, pack size, aggregated mismatch | 12 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/ |
+| added | pack size aggregated mismatch, container constituent, 4 tablets | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/ContainerConstituent-4Tablets |
+| added | pack size aggregated mismatch, container constituent, 6 tablets | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/ContainerConstituent-6Tablets |
+| added | pack size aggregated mismatch, manufactured item, tablets batch a | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/ManufacturedItem-TabletsBatchA |
+| added | pack size aggregated mismatch, manufactured item, tablets batch b | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/ManufacturedItem-TabletsBatchB |
+| added | pack size aggregated mismatch, medicinal product, tablets | 3 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/MedicinalProduct-Tablets |
+| added | pack size aggregated mismatch, package item, tablets | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/PackageItem-Mismatch |
+| added | pack size aggregated mismatch, packaged medicinal product, asserted 9 tablets | 9 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleAggregatedMismatch/PackagedMedicinalProduct-Mismatch |
+| added | IDMP-O Example, pack size, composite of different units | 12 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/ |
+| added | pack size composite, combined pharmaceutical dose form, powder and solvent for solution for injection | 3 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/CombinedPharmaceuticalDoseForm |
+| added | pack size composite, container constituent, 1 powder vial | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/ContainerConstituent-PowderVial |
+| added | pack size composite, container constituent, 1 solvent syringe | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/ContainerConstituent-SolventSyringe |
+| added | pack size composite, manufactured item, powder vial | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/ManufacturedItem-PowderVial |
+| added | pack size composite, manufactured item, solvent syringe | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/ManufacturedItem-SolventSyringe |
+| added | pack size composite, medicinal product, vial and syringe | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/MedicinalProduct-Composite |
+| added | pack size composite, package item, vial and syringe | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/PackageItem-VialAndSyringe |
+| added | pack size composite, packaged medicinal product, 1 vial and 1 syringe | 13 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleComposite/PackagedMedicinalProduct-VialAndSyringe |
+| added | IDMP-O Example, pack size, liquid reconstitution | 12 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/ |
+| added | pack size reconstitution, combined pharmaceutical dose form, powder and solvent for solution for injection | 3 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/CombinedPharmaceuticalDoseForm |
+| added | pack size reconstitution, container constituent, 1 powder vial | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/ContainerConstituent-PowderVial |
+| added | pack size reconstitution, container constituent, 1 solvent vial | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/ContainerConstituent-SolventVial |
+| added | pack size reconstitution, manufactured item, powder vial | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/ManufacturedItem-PowderVial |
+| added | pack size reconstitution, manufactured item, solvent vial | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/ManufacturedItem-SolventVial |
+| added | pack size reconstitution, medicinal product, powder and solvent vials | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/MedicinalProduct-Reconstitution |
+| added | pack size reconstitution, package item, two vials | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/PackageItem-TwoVials |
+| added | pack size reconstitution, packaged medicinal product, 1 vial and 1 vial | 13 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleReconstitution/PackagedMedicinalProduct-TwoVials |
+| added | IDMP-O Example, pack size, single count | 12 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/ |
+| added | pack size single count, container constituent, 150 capsules | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/ContainerConstituent-150Capsules |
+| added | pack size single count, container constituent, 28 tablets | 8 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/ContainerConstituent-28Tablets |
+| added | pack size single count, manufactured item, capsule | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/ManufacturedItem-Capsule |
+| added | pack size single count, manufactured item, tablet | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/ManufacturedItem-Tablet |
+| added | pack size single count, medicinal product, capsules | 3 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/MedicinalProduct-Capsules |
+| added | pack size single count, medicinal product, tablets | 3 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/MedicinalProduct-Tablets |
+| added | pack size single count, package item, 150 capsules | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/PackageItem-150Capsules |
+| added | pack size single count, package item, 28 tablets | 4 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/PackageItem-28Tablets |
+| added | pack size single count, packaged medicinal product, 150 capsules | 9 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/PackagedMedicinalProduct-150Capsules |
+| added | pack size single count, packaged medicinal product, 28 tablets | 9 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/PackSizeExampleSingleCount/PackagedMedicinalProduct-28Tablets |
+| added | is denominator of | 13 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11240-UnitsOfMeasurement/isDenominatorOf |
+| added | is numerator of | 13 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11240-UnitsOfMeasurement/isNumeratorOf |
+| added | pack size | 15 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/PackSize |
+| added | has derived value | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/hasDerivedValue |
+| added | has pack size | 6 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11615-MedicinalProducts/hasPackSize |
+| added | capsule | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/VOCAB/UnifiedCodeForUnitsOfMeasure/Capsule |
+| added | syringe | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/VOCAB/UnifiedCodeForUnitsOfMeasure/Syringe |
+| added | vial | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/VOCAB/UnifiedCodeForUnitsOfMeasure/Vial |
+| modified | recipe precedes | 1 | 0 | https://spec.pistoiaalliance.org/cmc/ontology/PharmaceuticalProcess#recipePrecedes |
+| modified | About IDMP Development - Reference Individuals | 5 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/AboutIDMPDev-ReferenceIndividuals/ |
+| modified | terlipressin denominator in terlipressin acetate 1 mg/ml solution for injection concentration strength | 1 | 1 | https://spec.pistoiaalliance.org/idmp/ontology/EXMP/TerlipressinExample/TerlipressinDenominatorInTerlipressinAcetate1MgPerMlSolutionForInjectionConcentrationStrength |
+| modified | ISO 11240 Units of Measurement (UOM) Ontology | 1 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/ISO/ISO11240-UnitsOfMeasurement/ |
+| modified | Mapping MVF to BFO Ontology | 1 | 1 | https://spec.pistoiaalliance.org/idmp/ontology/MVF/MappingMVFToBFO/ |
+| modified | ampoule | 1 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/VOCAB/UnifiedCodeForUnitsOfMeasure/Ampoule |
+| modified | tablet | 1 | 0 | https://spec.pistoiaalliance.org/idmp/ontology/VOCAB/UnifiedCodeForUnitsOfMeasure/Tablet |
+
+[This Excel table](https://github.com/Pistoia-Alliance-Inc/IDMP-O/blob/gh-pages/releases/v1.7.0/2026-07-10-Changed-Triples-from-1.6.0-to-1.7.0.xlsx) contains the complete list of changed triples between 1.6.0 and 1.7.0.
+
+</details>
+
+<details>
 <summary>IDMP Ontology Release 1.6.0 (master_v1.6.0) - 2026-05-12</summary>
 
 # IDMP Ontology Release 1.6.0
