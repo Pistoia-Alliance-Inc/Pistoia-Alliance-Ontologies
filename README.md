@@ -8,6 +8,140 @@ Public access repository to Pistoia Alliance Ontologies
 ## Release notes
 
 <details>
+<summary>IDMP Ontology Release 1.8.0 (master_v1.8.0) - 2026-10-10</summary>
+
+### IDMP Ontology Release 1.8.0
+
+The 1.8.0 release of IDMP-O (Identification of Medicinal Products Ontology) includes the development work of the third quarter of 2026.
+
+The main focus of the release is the reduction of the external ontologies that IDMP-O imports.
+The previous IDMP-O version imported complete external modules including several thousand unused terms. Starting with 1.8.0, we keep only the external terms that we actually use. These terms are included as MIREOT extracts with their original IRIs, so every reference in IDMP-O stays unchanged.
+The merged Core artifact is self-contained (without owl:imports) and holds 351 external terms (compared to ~4600 external terms in 1.7.0).
+
+The second focus is the alignment with the Pistoia Alliance Ontology Design Principles: copyright and license statements, ontology level and term level metadata, version IRIs that follow the release, and the separation of code values from the model.
+
+The release provides three single file artifacts, Core, Full and Examples, and a change report against the previous release.
+
+### Content modifications
+
+- Replaced full imports by MIREOT extracts: FIBO, LCC, IOF, SPAR and of the Commons modules Business Authorizations, Government Entities, Locations, Structured Collections, Organizations, Registration Authorities, Regulatory Agencies, Sites and Facilities and Products and Services. An extract keeps label, definition, type and the superclasses of each referenced term, and for properties also superproperty, domain, range and inverse. [[Issue IDMPO-40]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-40) [[Issue IDMPO-41]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-41) [[Issue IDMPO-42]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-42) [[Issue IDMPO-43]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-43) [[Issue IDMPO-44]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-44) [[Issue IDMPO-45]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-45) [[Issue IDMPO-46]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-46) [[Issue IDMPO-47]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-47) [[Issue IDMPO-48]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-48) [[Issue IDMPO-49]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-49) [[Issue IDMPO-50]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-50) [[Issue IDMPO-51]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-51) [[Issue IDMPO-52]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-52) [[Issue IDMPO-53]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-53) [[Issue IDMPO-80]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-80) [[Issue IDMPO-81]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-81) [[Issue IDMPO-82]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-82) [[Issue IDMPO-83]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-83) [[Issue IDMPO-77]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-77)
+- Removed external modules that no IDMP-O module needs: the IOF modules Monitoring and Control, Material, Manufacturing Execution, Equipment and Physical, the Commons modules Statistical Measures and the unpinned South American jurisdictions, the LCC modules Regions, Country Representation and UN M49, the Multiple Vocabulary Facility, and the geo and time vocabularies. Two IOF Physical terms and the LCC class Country stay as extracts, because IDMP-O references them. [[Issue IDMPO-54]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-54) [[Issue IDMPO-55]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-55) [[Issue IDMPO-56]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-56) [[Issue IDMPO-57]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-57) [[Issue IDMPO-58]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-58) [[Issue IDMPO-59]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-59) [[Issue IDMPO-60]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-60) [[Issue IDMPO-61]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-61) [[Issue IDMPO-62]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-62) [[Issue IDMPO-63]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-63) [[Issue IDMPO-68]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-68) [[Issue IDMPO-69]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-69) [[Issue IDMPO-70]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-70)
+- Moved 11 equivalence axioms between IDMP-O and OMG terms into the alignment module MAP/IDMPO-OMG-Alignment.ttl. The deprecated IDMP-O terms point to their replacements with dcterms:isReplacedBy. [[Issue IDMPO-71]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-71)
+- Moved the named individuals of the ISO model modules into code system modules under VOCAB/ISOVocabularies and into VOCAB/ReferenceOrganizations.ttl, and the registry identifier classes of the agency modules into ISO/ISO11238-RegistrationAuthorities.ttl. No IRI changed. [[Issue IDMPO-78]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-78)
+- Separated containment from parthood: idmp-mprd:contains stays transitive but is no longer a subproperty of cmns-col:hasPart. Package components are direct parts (cmns-col:hasDirectPart). [[Issue IDMPO-65]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-65) [[Issue IDMPO-66]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-66)
+- Added restrictions that relate a manufacturer to the product, material, matter and container specifications in which it is applicable (cmns-cxtdsg:appliesTo and cmns-cxtdsg:isApplicableIn, minimum 0), and used them in the Terlipressin example. [[Issue IDMPO-38]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-38)
+- Replaced four references to properties that do not exist in their namespace: cmns-av:adoptedFrom by cmns-av:adaptedFrom, cmns-dsg:isIdentifiedBy by cmns-id:isIdentifiedBy, cmns-pts:isPlayedBy by cmns-rlcmp:isPlayedBy, and dcterms:licence by dcterms:license. Gave idmp-mprd:authorizesMarketingOf its own definition. [[Issue IDMPO-65]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-65) [[Issue IDMPO-73]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-73) [[Issue IDMPO-77]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-77)
+- Added the skos and dcterms terms that IDMP-O uses but no imported module declares, as extracts of the W3C SKOS and DCMI Terms vocabularies. The extracts keep the property types of their sources, so Core and Full agree: the skos relations are object properties, and a reasoner types the resources that skos:exactMatch and skos:related link as skos:Concept. The dcterms terms are rdf:Property, as in DCMI Terms. The Core artifact keeps only the extracted skos and dcterms terms it uses, with the terms these name, for example skos:Concept as domain of skos:semanticRelation. Full holds the full W3C SKOS and DCMI Terms vocabularies. [[Issue IDMPO-65]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-65) [[Issue IDMPO-97]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-97)
+- Replaced the dc prefix by dcterms. [[Issue IDMPO-64]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-64)
+
+### Metadata and licensing
+
+- Every IDMP-O module carries the copyright, license, rights and contributor statements of Appendix A of the design principles, in three tiers: development for the sources, members only for the release archives, public for the merged artifacts. Third party content is acknowledged with its source, version and license. [[Issue IDMPO-73]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-73)
+- Every module header carries the ontology level metadata of Appendix A, such as title, abbreviation, version information and bibliographic citation. [[Issue IDMPO-74]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-74)
+- Version IRIs carry the planned release date as YYYY-MM-DD, for example https://spec.pistoiaalliance.org/idmp/ontology/2026-10-10/..., and owl:versionInfo carries vX.Y.Z. Module IRIs follow the file path. The IRIs of six example modules were aligned with their file names, among them LinagliptinlExample, which becomes LinagliptinExample. The former IRIs of their 47 individuals stay as deprecated individuals that point to the new ones. [[Issue IDMPO-75]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-75)
+- The 874 IDMP-O classes and properties that are not deprecated carry dcterms:creator, and the extracted external terms carry rdfs:isDefinedBy with their source ontology. [[Issue IDMPO-79]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-79)
+
+### Validation and test additions
+
+- Added SHACL shapes for the copyright and license statements, the ontology level metadata and the term creator. [[Issue IDMPO-73]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-73) [[Issue IDMPO-74]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-74) [[Issue IDMPO-79]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-79)
+- Added hygiene queries that report undeclared external terms and definition texts shared by several terms. The 18 known clusters of shared definitions are documented and not reported. [[Issue IDMPO-77]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-77)
+- Replaced the five competency questions that walked from a jurisdiction to its country code, because that path left the closure with the LCC carve out, by questions on the jurisdiction labels. [[Issue IDMPO-40]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-40)
+- The loaders import VOCAB/DocumentComponents.ttl, so the retention check sees its released terms. The build fails when a released term disappears. [[Issue IDMPO-87]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-87)
+
+### New release artifacts
+
+- The release folder 1.8.0 holds three single file artifacts. [[Issue IDMPO-92]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-92)
+ - IdentificationOfMedicinalProducts-Core.ttl: the released modules and the extracts of the external terms they use, including the used terms of the 15 Commons modules with their datatype definitions. One self contained file without owl:imports, consistent according to Pellet.
+ - IdentificationOfMedicinalProducts-Full.ttl: the released modules with every full external module of their closure inlined, one self contained file. With the full W3C SKOS and DCMI Terms vocabularies Full also holds two of their statements that OWL 2 DL does not allow: rdf:List as range of skos:memberList, and dcterms:AgentClass as subclass of rdfs:Class. [[Issue IDMPO-97]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-97)
+ - IdentificationOfMedicinalProducts-Examples.ttl: the examples, with owl:imports of the Core artifact.
+- The release bundle has one folder per kind of artifact, each with a README.md: ontology, vocabulary, datadictionary, merged for the three single file artifacts, reasoning for the input of the consistency check, changereport and hygiene. [[Issue IDMPO-92]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-92)
+- The four loaders were renamed to AboutIDMPDevCore, AboutIDMPDevCore-ReferenceIndividuals, AboutIDMPProdCore and AboutIDMPProdCore-ReferenceIndividuals. Four new Full loaders import the Core loaders and the full external modules. [[Issue IDMPO-92]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-92)
+- Core keeps the external terms as declarations with label, definition, superclasses, superproperties, domain, range and inverse. Their other axioms are in Full only: the property characteristics, property chains and disjointness axioms. For example cmns-col:hasPart and cmns-col:isPartOf are transitive in Full but not in Core, so transitive parthood inferences, such as a component of a component being a part of the outer package, can differ between the two artifacts. [[Issue IDMPO-96]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-96)
+
+### Technical modifications
+
+- The build pipeline writes a change report against the previous release, with links to the merge requests and tickets of every change. It is part of the release bundle and of the reports of every full build. [[Issue IDMPO-76]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-76) [[Issue IDMPO-16]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-16)
+- A script extracts the external terms from a declarative plan and checks that no IDMP-O module imports a pruned external module. [[Issue IDMPO-51]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-51) [[Issue IDMPO-52]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-52) [[Issue IDMPO-53]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-53)
+- The build checks the Core artifact for consistency with Pellet. The lean core stays checked with HermiT and Pellet. [[Issue IDMPO-92]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-92)
+- A declaration check finds incompatible declarations without a reasoner: in the import closures of the eight loaders and in the single file artifacts, an IRI declared as two kinds of property, or as class and datatype, and a term that Core types differently from Full. It runs in every build in about 5 seconds. The MIREOT check reports an extract that declares a term with another kind than its source, and lists the axioms of the sources that only Full holds. [[Issue IDMPO-97]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-97)
+- The release artifacts are written with deterministic text, so a change shows as the changed lines only. A pre-commit hook keeps them current. [[Issue IDMPO-92]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-92)
+
+No released ontology term was removed. The retention check against 1.7.0 passes. The 47 example individuals that received a new IRI with the alignment of the example module IRIs [[Issue IDMPO-75]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-75) keep their former IRI as deprecated individual: owl:deprecated true, dcterms:isReplacedBy the new IRI, and the new individual points back with dcterms:replaces. The change report therefore lists them as modified. It lists one IDMP-O term as deleted, the metadata individual IOFModule, removed with the IOF metadata module [[Issue IDMPO-41]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-41) [[Issue IDMPO-42]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-42) [[Issue IDMPO-43]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-43).
+
+### Delivered Change Requests (JIRA Tickets)
+
+Complete list of the tickets delivered in this release
+
+- [[Issue IDMPO-16]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-16) Generate the change report as part of the build pipeline, delivered together with IDMPO-76 by @hk-accurids
+- [[Issue IDMPO-38]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-38) Relate a manufacturer to the products, materials and containers in which it is applicable by @hk-accurids
+- [[Issue IDMPO-40]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-40) Extract the referenced FIBO terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-41]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-41) Extract the referenced IOF Recipe terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-42]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-42) Extract the referenced IOF Parameter terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-43]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-43) Extract the referenced IOF Core terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-44]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-44) Extract the referenced Commons Business Authorizations terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-45]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-45) Extract the referenced Commons Government Entities terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-46]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-46) Extract the referenced Commons Locations terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-47]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-47) Extract the referenced Commons Structured Collections terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-48]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-48) Extract the referenced LCC country codes with MIREOT by @hk-accurids
+- [[Issue IDMPO-49]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-49) Extract the referenced LCC language codes with MIREOT by @hk-accurids
+- [[Issue IDMPO-50]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-50) Extract the referenced LCC language representation terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-51]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-51) Extract the referenced SPAR DEO terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-52]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-52) Extract the referenced SPAR Pattern Ontology terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-53]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-53) Extract the referenced SPAR DoCO terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-54]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-54) Remove the IOF Monitoring and Control module by @hk-accurids
+- [[Issue IDMPO-55]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-55) Remove the IOF Material module by @hk-accurids
+- [[Issue IDMPO-56]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-56) Remove the IOF Manufacturing Execution module by @hk-accurids
+- [[Issue IDMPO-57]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-57) Remove the IOF Equipment module by @hk-accurids
+- [[Issue IDMPO-58]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-58) Remove the unpinned Commons South American jurisdiction module by @hk-accurids
+- [[Issue IDMPO-59]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-59) Remove the Commons Statistical Measures module by @hk-accurids
+- [[Issue IDMPO-60]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-60) Remove the LCC regions module by @hk-accurids
+- [[Issue IDMPO-61]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-61) Remove the LCC country representation module by @hk-accurids
+- [[Issue IDMPO-62]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-62) Remove the LCC UN M49 region codes module by @hk-accurids
+- [[Issue IDMPO-63]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-63) Remove the Multiple Vocabulary Facility (MVF) modules by @hk-accurids
+- [[Issue IDMPO-64]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-64) Use the dcterms prefix consistently by @hk-accurids
+- [[Issue IDMPO-65]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-65) Correct and complement the annotation vocabulary by @hk-accurids
+- [[Issue IDMPO-66]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-66) Separate containment from parthood, dcterms:hasPart was not in use by @hk-accurids
+- [[Issue IDMPO-68]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-68) Remove the geo vocabulary with the Commons Locations module by @hk-accurids
+- [[Issue IDMPO-69]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-69) Remove the time vocabulary with the Commons dates and times mapping by @hk-accurids
+- [[Issue IDMPO-70]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-70) Remove the IOF Physical module, two terms kept as extracts by @hk-accurids
+- [[Issue IDMPO-71]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-71) Move the IDMP-O to OMG equivalence axioms into a separate alignment module by @hk-accurids
+- [[Issue IDMPO-72]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-72) Audit the IDMP-O classes that reference OMG terms by @hk-accurids
+- [[Issue IDMPO-73]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-73) Consolidate the copyright and license statements by @hk-accurids
+- [[Issue IDMPO-74]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-74) Complete the ontology level metadata by @hk-accurids
+- [[Issue IDMPO-75]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-75) Derive version IRIs from the release date and align module IRIs with the file paths by @hk-accurids
+- [[Issue IDMPO-76]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-76) Implement the change report by @hk-accurids
+- [[Issue IDMPO-77]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-77) Fix the dangling external references and document shared definitions by @hk-accurids
+- [[Issue IDMPO-78]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-78) Move the named individuals out of the ISO model modules by @hk-accurids
+- [[Issue IDMPO-79]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-79) Add term level metadata by @hk-accurids
+- [[Issue IDMPO-80]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-80) Extract the referenced Commons Organizations terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-81]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-81) Extract the referenced Commons Registration Authorities terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-82]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-82) Extract the referenced Commons Regulatory Agencies terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-83]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-83) Extract the referenced Commons Sites and Facilities terms with MIREOT by @hk-accurids
+- [[Issue IDMPO-87]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-87) Fix the retention check by @hk-accurids
+- [[Issue IDMPO-92]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-92) Provide the merged artifacts Core, Full and Examples by @hk-accurids
+- [[Issue IDMPO-96]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-96) State the parthood inference differences between Core and Full by @hk-accurids
+- [[Issue IDMPO-97]](https://pistoiaalliance-jira.atlassian.net/browse/IDMPO-97) Align the skos property types of Core and Full by @hk-accurids
+
+### List of changed terms
+
+The change report change-report-1.7.0-vs-1.8.0.xlsx in the release bundle lists every changed term with its triples, merge requests and tickets. In summary, against 1.7.0:
+
+| Content | in 1.7.0 | in 1.8.0 | added | modified | deleted |
+|---|---:|---:|---:|---:|---:|
+| IDMP-O modules | 71 | 78 | 14 | 64 | 7 |
+| extracted external modules | 0 | 32 | 32 | 0 | 0 |
+| class | 548 | 548 | 0 | 525 | 0 |
+| object property | 256 | 256 | 0 | 255 | 0 |
+| datatype property | 98 | 98 | 0 | 98 | 0 |
+| annotation property | 7 | 7 | 0 | 7 | 0 |
+| individual | 1584 | 1630 | 47 | 64 | 1 |
+| external term used by IDMP-O | 378 | 375 | 8 | 204 | 11 |
+
+Most of the modified classes and properties gained dcterms:creator.
+
+</details>
+
+<details>
 <summary>IDMP Ontology Release 1.7.0 (master_v1.7.0) - 2026-07-10</summary>
 
 # IDMP Ontology Release 1.7.0
