@@ -6,6 +6,7 @@ Public access repository to Pistoia Alliance Ontologies
 <!-- migrate-releases:release-notes:begin -->
 
 ## Release notes
+Note: IDMP-O releases are made available in stages. Funding members receive each release immediately. All Pistoia Alliance members receive access six months later, and the release becomes publicly available in this GitHub repository one year after its initial release. Pistoia Alliance members can request access by emailing idmpo@PistoiaAlliance.org.
 
 <details>
 <summary>IDMP Ontology Release 1.8.0 (master_v1.8.0) - 2026-10-10</summary>
